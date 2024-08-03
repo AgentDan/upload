@@ -20,7 +20,7 @@ router.get('/', async (request, response) => {
     response.json(blog)
 })
 
-router.post("/addblog", upload.single("myfile") ,(req, res) => {
+router.post("/addblog", upload.single("myfile"), (req, res) => {
     const newBlog = new Blog({
         title: req.body.title,
         author: req.body.author,
@@ -34,16 +34,16 @@ router.post("/addblog", upload.single("myfile") ,(req, res) => {
         .catch(err => res.status(400).json(`Error my: ${err}`))
 })
 
-    router.delete('/deleteblog/:id', async (request, response) => {
-        try {
-            const blog = await Blog.findOneAndDelete({_id: request.params.id})
-            response.json(blog)
-            fs.unlinkSync(`./client/public/uploads/${blog.img}`)
+router.delete('/deleteblog/:id', async (request, response) => {
+    try {
+        const blog = await Blog.findOneAndDelete({_id: request.params.id})
+        response.json(blog)
+        fs.unlinkSync(`./client/public/uploads/${blog.img}`)
 
-        } catch (error) {
-            console.log(error)
+    } catch (error) {
+        console.log(error)
 
-        }
-    })
+    }
+})
 
-    module.exports = router
+module.exports = router
